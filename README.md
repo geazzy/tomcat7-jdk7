@@ -33,7 +33,34 @@ This Docker Compose file defines the service for running the Tomcat container. I
 5. **Volumes**: Mounts a volume for Tomcat configuration.
 6. **Entrypoint and Command**: Specifies the entrypoint script and the command to run Tomcat.
 
-# .env Documentation
+# Example docker-compose.yml
+
+Here is an example of a `docker-compose.yml` file based on the provided documentation:
+
+```yaml
+version: '3.8'
+
+services:
+    tomcat7-jdk7:
+        image: dacomcmutfpr/tomcat7-jdk7:latest
+        build: .
+        ports:
+            - "80:80"
+        environment:
+            # - TOMCAT_USER=admin #without .env file
+            # - TOMCAT_PASSWORD=admin123 #without .env file
+            - TOMCAT_USER=${TOMCAT_USER} #with .env file
+            - TOMCAT_PASSWORD=${TOMCAT_PASSWORD} #with .env file
+        volumes:
+            - tomcat-conf:/usr/local/tomcat/conf
+        entrypoint: ["/usr/local/bin/docker-entrypoint.sh"]
+        command: ["catalina.sh", "run"]
+
+volumes:
+    tomcat-conf:
+```
+
+# .env 
 
 Create the file with the following variables:
 
@@ -41,7 +68,7 @@ Create the file with the following variables:
 2. **TOMCAT_PASSWORD**: The password for Tomcat.
 
 ---
-# Documentação do Dockerfile
+# Dockerfile
 
 Este Dockerfile configura um ambiente com Ubuntu 24.04, OpenJDK 7 e Apache Tomcat 7. Ele executa os seguintes passos:
 
@@ -57,7 +84,7 @@ Este Dockerfile configura um ambiente com Ubuntu 24.04, OpenJDK 7 e Apache Tomca
 10. **Expor Porta**: Expõe a porta 80.
 11. **Entrypoint e CMD**: Define o entrypoint e o comando padrão para iniciar o Tomcat.
 
-# Documentação do docker-entrypoint.sh
+# docker-entrypoint.sh
 
 Este script é o entrypoint para o contêiner Docker. Ele executa os seguintes passos:
 
@@ -65,7 +92,7 @@ Este script é o entrypoint para o contêiner Docker. Ele executa os seguintes p
 2. **Configurar Usuários do Tomcat**: Cria o arquivo `tomcat-users.xml` com os papéis necessários e as credenciais do usuário fornecidas.
 3. **Iniciar Tomcat**: Executa o comando `catalina.sh run` para iniciar o Tomcat.
 
-# Documentação do docker-compose.yml
+# docker-compose.yml
 
 Este arquivo Docker Compose define o serviço para executar o contêiner Tomcat. Ele inclui:
 
@@ -76,7 +103,34 @@ Este arquivo Docker Compose define o serviço para executar o contêiner Tomcat.
 5. **Volumes**: Monta um volume para a configuração do Tomcat.
 6. **Entrypoint e Comando**: Especifica o script de entrypoint e o comando para executar o Tomcat.
 
-# Documentação do .env
+# Example docker-compose.yml
+
+Aqui está um exemplo de um arquivo `docker-compose.yml` baseado na documentação fornecida:
+
+```yaml
+version: '3.8'
+
+services:
+    tomcat7-jdk7:
+        image: dacomcmutfpr/tomcat7-jdk7:latest
+        build: .
+        ports:
+            - "80:80"
+        environment:
+            # - TOMCAT_USER=admin #sem o arquivo .env
+            # - TOMCAT_PASSWORD=admin123 #sem o arquivo .env
+            - TOMCAT_USER=${TOMCAT_USER} #com o arquivo .env
+            - TOMCAT_PASSWORD=${TOMCAT_PASSWORD} #com o arquivo .env
+        volumes:
+            - tomcat-conf:/usr/local/tomcat/conf
+        entrypoint: ["/usr/local/bin/docker-entrypoint.sh"]
+        command: ["catalina.sh", "run"]
+
+volumes:
+    tomcat-conf:
+```
+
+# .env
 
 Crie o arquivo com as váriaveis:
 
