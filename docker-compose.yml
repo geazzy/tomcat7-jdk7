@@ -1,0 +1,16 @@
+services:
+  tomcat7-jdk7:
+    image: dacomcmutfpr/tomcat7-jdk7:v01
+    build: .
+    ports:
+      - "80:80"
+    environment:
+      - TOMCAT_USER=${TOMCAT_USER}
+      - TOMCAT_PASSWORD=${TOMCAT_PASSWORD}
+    volumes:
+      - tomcat-conf:/usr/local/tomcat/conf
+    entrypoint: ["/usr/local/bin/docker-entrypoint.sh"]
+    command: ["catalina.sh", "run"]
+
+volumes:
+  tomcat-conf:
